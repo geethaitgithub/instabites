@@ -6,6 +6,42 @@
     <title>InstaBites</title>
 </head>
 <body>
+    <div id="root_html">
+        <h1> React using HTML</h1>
+      </div>
     
+      <div id="root_js"></div>
+    
+      <div id = "root_react"></div>
+
+      <div id = "root_nestedelement"></div>
+
+      
+      <div id="root">Not rendered</div>
+
+      <script>
+        /* Javascript*/
+        const h1 = document.createElement("h1");
+        h1.innerHTML = " React using JS";
+        const root_js = document.getElementById("root_js");
+        root_js.appendChild(h1);
+      </script>
+
+
+    <!-- Injectd React and ReactDOM using CDN -->
+    <!--<script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>-->
+    <!-- Injected external js file -->
+
+    <script type="module" src="./src/App.js"></script>
+
+   
+
 </body>
 </html>
