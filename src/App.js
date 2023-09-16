@@ -1,38 +1,61 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import Header from "./Components/Header";
+import Body from "./Components/Body";
+import Footer from "./Components/Footer";
+import About from "./Components/About";
+import Contact from "./Components/Contact";
+import Error from "./Components/Error";
+import Cart from "./Components/Cart";
+import RestaurantMenu from "./Components/RestaurantMenu";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { Provider } from "react-redux";
+import appStore from "./Utils/appStore";
 
-
-//All the compnents in single file
-
-
- 
-/* Creating react elements and rendering in root_react  */ 
-
-const heading = React.createElement("h1", {id: "title"}, "Title using React");
-const root_react = ReactDOM.createRoot(document.getElementById("root_react"));
-root_react.render(heading);
-
-/* Nested React Elements inside container div and rendering in root */
-const heading1 = React.createElement("h1", {id: "title"}, "nested_heading1");
-const heading2 = React.createElement("h2", {id: "sub_title"}, "nested_heading2");
-const root_nestedelement = ReactDOM.createRoot(document.getElementById("root_nestedelement"));
-const container = React.createElement("div", {id: "content"}, [heading1, heading2]);
-root_nestedelement.render(container);
-
-/*COMPONENT COMPOSITION*/ 
-const Newcomponent = () => (
-    <h3>second  component to check component composition</h3>
-);
-const NewHeader = () => (
-<div>
-  <h3>First component </h3>
-  <Newcomponent />
-</div>
+const AppLayout = () => (
+  <Provider store={appStore}>
+    <div>
+      <Header />
+      <Outlet />
+      <Footer />
+    </div>
+  </Provider>
 );
 
-  // create root using createRoot
-  const root = ReactDOM.createRoot(document.getElementById("root"));
-  // passing react element inside root
-  //root.render(heading);
-  // passing functional component inside root
-  root.render(<NewHeader />);
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Body />,
+      },
+      {
+        path: "/home",
+        element: <Body />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/restaurants/:resId", //Dynamic routing with resid
+        element: <RestaurantMenu />,
+      },
+    ],
+    errorElement: <Error />,
+  },
+]);
+
+// create root using createRoot
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<RouterProvider router={appRouter} />);
